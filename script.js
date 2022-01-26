@@ -1,135 +1,66 @@
 var myQuestions  = [
     {
-        question: "What is not a program language?",
-        answers: {
-            a: 'Javascript',
-            b: 'Ruby',
-            c: 'Python',
-            d: 'Pikachu'
-        },
+        question: 'What is not a program language?',
+        a: 'Javascript',
+        b: 'Ruby',
+        c: 'Python',
+        d: 'Pikachu',
         correctAnswer: 'd'
     },
     {
-        question: "What does the following expression return? typeof(3);",
-        answers: {
-            a: "Array",
-            b: "Scope",
-            c: "Number",
-            d: "Object",
-        },
+        question: 'What does the following expression return? typeof(3);',
+        a: 'Array',
+        b: 'Scope',
+        c: 'Number',
+        d: 'Object',
         correctAnswer: 'c'
     },
     {
-        question: "What does the following expression return? NaN === NaN",
-        answers: {
+        question: 'What does the following expression return? NaN === NaN',
             a: 'NaN',
             b: 'True',
             c: 'False',
-            d: 'somewhat the same'
-        },
+            d: 'somewhat the same',
         correctAnswer: 'c'
-    },
-];
+    }
+]
 
 const questionEl = document.getElementById('question');
-const choiceA = document.getElementById('choiceA');
-const choiceB = document.getElementById('choiceB');
-const choiceC = document.getElementById('choiceC');
-const choiceD = document.getElementById('choiceD');
-
+const choiceA = document.getElementById("choiceA");
+const choiceB = document.getElementById("choiceB");
+const choiceC = document.getElementById("choiceC");
+const choiceD = document.getElementById("choiceD");
+const submitBtn = document.getElementById("submit");
+const answerEl = document.querySelectorAll(".answer")
 let currentQuestion = 0;
 
-loadQuiz();
 
-function loadQuiz() {
-    questionEl 
+loadQuestion();
 
-    currentQuestion++; 
+function loadQuestion() {
+    const currentQuestionData = myQuestions[currentQuestion];
+
+    questionEl.innerText = currentQuestionData.question;
+    
+    choiceA.innerText = currentQuestionData.a;
+    choiceB.innerText = currentQuestionData.b;
+    choiceC.innerText = currentQuestionData.c;
+    choiceD.innerText = currentQuestionData.d;
 }
-// document.getElementById('quiz');
-// var resultsContainer = document.getElementById('results');
-// var submitButton = document.getElementById('submit');
+submitBtn.addEventListener("click", ()=> {
+     currentQuestion++; 
+    if(answerEl.checked) {
+        //timer +10
+    }
+    else{
+        //timer -10
+    }
+     if(currentQuestion < myQuestions.length) {
+         loadQuestion();
 
-// generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
+     }else {
+         //Todo: add action after complete.
+     }
+     loadQuestion();
+});
 
-// function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
-
-//   function showQuestions(questions, quizContainer){
-//     // we'll need a place to store the output and the answer choices
-//     var output = [];
-//     var answers;
-
-//     // for each question...
-//     for(var i=0; i<questions.length; i++){
-      
-//       // first reset the list of answers
-//       answers = [];
-
-//       // for each available answer...
-//       for(letter in questions[i].answers){
-
-//         // ...add an html radio button
-//         answers.push(
-//           '<label>'
-//             + '<input type="radio" name="question'+i+'" value="'+letter+'">'
-//             + letter + ': '
-//             + questions[i].answers[letter]
-//           + '</label>'
-//         );
-//       }
-
-//       // add this question and its answers to the output
-//       output.push(
-//         '<div class="question">' + questions[i].question + '</div>'
-//         + '<div class="answers">' + answers.join('') + '</div>'
-//       );
-//     }
-
-//     // finally combine our output list into one string of html and put it on the page
-//     quizContainer.innerHTML = output.join('');
-//   }
-
-
-//   function showResults(questions, quizContainer, resultsContainer){
-    
-//     // gather answer containers from our quiz
-//     var answerContainers = quizContainer.querySelectorAll('.answers');
-    
-//     // keep track of user's answers
-//     var userAnswer = '';
-//     var numCorrect = 0;
-    
-//     // for each question...
-//     for(var i=0; i<questions.length; i++){
-
-//       // find selected answer
-//       userAnswer = (answerContainers[i].querySelector('input[name=question'+i+']:checked')||{}).value;
-      
-//       // if answer is correct
-//       if(userAnswer===questions[i].correctAnswer){
-//         // add to the number of correct answers
-//         numCorrect++;
-        
-//         // color the answers green
-//         answerContainers[i].style.color = 'lightgreen';
-//       }
-//       // if answer is wrong or blank
-//       else{
-//         // color the answers red
-//         answerContainers[i].style.color = 'red';
-//       }
-//     }
-
-//     // show number of correct answers out of total
-//     resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length;
-//   }
-
-//   // show questions right away
-//   showQuestions(questions, quizContainer);
-  
-//   // on submit, show results
-//   submitButton.onclick = function(){
-//     showResults(questions, quizContainer, resultsContainer);
-//   }
-
-// }
