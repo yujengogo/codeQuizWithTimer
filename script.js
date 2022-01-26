@@ -33,11 +33,13 @@ const choiceD = document.getElementById("choiceD");
 const submitBtn = document.getElementById("submit");
 const answerEl = document.querySelectorAll(".answer")
 let currentQuestion = 0;
-
+//countDown app
 
 loadQuestion();
 
 function loadQuestion() {
+    deselectAnswers();
+
     const currentQuestionData = myQuestions[currentQuestion];
 
     questionEl.innerText = currentQuestionData.question;
@@ -48,13 +50,17 @@ function loadQuestion() {
     choiceD.innerText = currentQuestionData.d;
 }
 submitBtn.addEventListener("click", ()=> {
-     currentQuestion++; 
-    if(answerEl.checked) {
+    
+    if(answerEl.id === myQuestions[currentQuestion].correctAnswer) {
+
         //timer +10
     }
     else{
         //timer -10
     }
+
+    currentQuestion++; 
+
      if(currentQuestion < myQuestions.length) {
          loadQuestion();
 
