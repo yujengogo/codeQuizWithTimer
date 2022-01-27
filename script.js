@@ -36,12 +36,25 @@ const choiceD = document.getElementById("choiceD");
 const d = document.getElementById('d')
 const submitBtn = document.getElementById("submit");
 const answerEl = document.querySelectorAll(".answer")
+const startBtn = document.getElementById("start");
 let quiz = document.getElementById('quiz')
+let starter = document.getElementById('starterPage')
 let results = document.getElementById('results')
+quiz.style.display = 'none'
 results.style.display = 'none'
 let currentQuestion = 0;
+var timeleft = 0;
+
+startBtn.addEventListener("click", ()=> {
+    quiz.style.display = ''
+    starter.style.display = 'none'
+
+    timeleft += 60
+
+});
+
 //countDown app
-var timeleft = 60;
+
 var downloadTimer = setInterval(function(){
     if(timeleft <= 0){
       clearInterval(downloadTimer);
@@ -50,10 +63,10 @@ var downloadTimer = setInterval(function(){
       document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
     }
     timeleft -= 1;
-  }, 1000);
-
+}, 1000);
 
 loadQuestion();
+
 
 function loadQuestion() {
     // deselectAnswers();
@@ -104,10 +117,10 @@ submitBtn.addEventListener("click", ()=> {
         loadQuestion();
      }else {
         
-        quiz.style.display = 'none'
+        quiz.style.display = 'none' // hide div quiz
         console.log(quiz.style.display)
-        results.style.display = ''
-        results.innerHTML = 'congrats, you had ' + timeleft + ' seconds left!'
+        results.style.display = '' // make result appear
+        results.innerHTML = 'congrats, you score is ' + timeleft + ' !'
         clearInterval(downloadTimer)
          //Todo: add action after complete.
      }
