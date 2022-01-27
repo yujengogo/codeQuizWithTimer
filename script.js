@@ -17,10 +17,10 @@ var myQuestions  = [
     },
     {
         question: 'What does the following expression return? NaN === NaN',
-            a: 'NaN',
-            b: 'True',
-            c: 'False',
-            d: 'somewhat the same',
+        a: 'NaN',
+        b: 'True',
+        c: 'False',
+        d: 'somewhat the same',
         correctAnswer: 'False'
     }
 ]
@@ -37,19 +37,21 @@ const d = document.getElementById('d')
 const submitBtn = document.getElementById("submit");
 const answerEl = document.querySelectorAll(".answer")
 const startBtn = document.getElementById("start");
-let quiz = document.getElementById('quiz')
-let starter = document.getElementById('starterPage')
-let results = document.getElementById('results')
-quiz.style.display = 'none'
-results.style.display = 'none'
+let quiz = document.getElementById('quiz');
+let starter = document.getElementById('starterPage');
+let results = document.getElementById('results');
+quiz.style.display = 'none';
+results.style.display = 'none';
 let currentQuestion = 0;
+var ele = document.getElementsByClassName("answer")
 var timeleft = 0;
+var score = localStorage.getItem("#score");
+timeleft.textContant = score;
 
 startBtn.addEventListener("click", ()=> {
-    quiz.style.display = ''
-    starter.style.display = 'none'
-
-    timeleft += 60
+    quiz.style.display = '';
+    starter.style.display = 'none';
+    timeleft += 60;
 
 });
 
@@ -69,7 +71,7 @@ loadQuestion();
 
 
 function loadQuestion() {
-    // deselectAnswers();
+   
 
     const currentQuestionData = myQuestions[currentQuestion];
 
@@ -107,20 +109,25 @@ submitBtn.addEventListener("click", ()=> {
 
     if(userChoice === myQuestions[currentQuestion].correctAnswer) {
         timeleft += 10;
+    
     } else{
         timeleft -= 10;
+    
     }
     console.log(timeleft)
     currentQuestion++; 
+    for(var i=0; i<ele.length;i++) 
+    ele[i].checked = false; // uncheck selection
 
-    if(currentQuestion < myQuestions.length) {
+    if(currentQuestion < myQuestions.length || timeleft > 0) {
         loadQuestion();
      }else {
-        
+        timeleft.textContant = score;//problem!
+        localStorage.setItem("#score", score);
         quiz.style.display = 'none' // hide div quiz
         console.log(quiz.style.display)
         results.style.display = '' // make result appear
-        results.innerHTML = 'congrats, you score is ' + timeleft + ' !'
+        // results.innerHTML = 'congrats, you score is ' + timeleft + ' !'
         clearInterval(downloadTimer)
          //Todo: add action after complete.
      }
