@@ -43,19 +43,23 @@ let results = document.getElementById('results');
 quiz.style.display = 'none';
 results.style.display = 'none';
 let currentQuestion = 0;
-var ele = document.getElementsByClassName("answer")
+var ele = document.getElementsByClassName("answer");
 var timeleft = 0;
-var score = localStorage.getItem("#score");
+var score = document.getElementById("score");
 timeleft.textContant = score;
+var userName = document.getElementById("userName");
 
 startBtn.addEventListener("click", ()=> {
     quiz.style.display = '';
     starter.style.display = 'none';
-    timeleft += 60;
+    timeleft += 30;
+    loadQuestion();
+    goToResult();
 
 });
 
 //countDown app
+
 
 var downloadTimer = setInterval(function(){
     if(timeleft <= 0){
@@ -67,7 +71,18 @@ var downloadTimer = setInterval(function(){
     timeleft -= 1;
 }, 1000);
 
-loadQuestion();
+function goToResult(){
+    if(timeleft<= 0) {
+        timeleft.textContant = score;//problem!
+        localStorage.setItem("#score", score);
+        quiz.style.display = 'none' // hide div quiz
+        console.log(quiz.style.display)
+        results.style.display = '' // make result appear
+        clearInterval(downloadTimer)
+    };
+};
+
+
 
 
 function loadQuestion() {
@@ -87,6 +102,7 @@ function loadQuestion() {
     c.value = currentQuestionData.c;
     choiceD.innerText = currentQuestionData.d;
     d.value = currentQuestionData.d;
+    
 }
 
 let userChoice
@@ -94,10 +110,7 @@ function checkAnswer(event) {
     console.log(event.target.value)
     userChoice = event.target.value
 }
-// answerArray = [a, b, c, d]
-// answerArray.forEach((answer) => {
-//     answer.addEventListener('click', checkAnswer(event))
-// })
+
 a.addEventListener('click', (event) => checkAnswer(event))
 b.addEventListener('click', (event) => checkAnswer(event))
 c.addEventListener('click', (event) => checkAnswer(event))
@@ -119,15 +132,20 @@ submitBtn.addEventListener("click", ()=> {
     for(var i=0; i<ele.length;i++) 
     ele[i].checked = false; // uncheck selection
 
-    if(currentQuestion < myQuestions.length || timeleft > 0) {
+    if(currentQuestion < myQuestions.length) {
         loadQuestion();
      }else {
-        timeleft.textContant = score;//problem!
-        localStorage.setItem("#score", score);
+         localStorage.setItem("score", timeleft);
+         let userInput = prompt("Please enter your name", "Pikachu");
+         if (userInput !=null) {
+             userName.textContent = userInput//make userName
+         };
+         localStorage.setItem("userName", userInput);
+        
+        score.innerHTML = localStorage.getItem("score");
         quiz.style.display = 'none' // hide div quiz
         console.log(quiz.style.display)
         results.style.display = '' // make result appear
-        // results.innerHTML = 'congrats, you score is ' + timeleft + ' !'
         clearInterval(downloadTimer)
          //Todo: add action after complete.
      }
